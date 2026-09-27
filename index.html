@@ -1064,16 +1064,33 @@ const menuImageAssets = {
             document.getElementById('homeTotalExpense').innerText = `Rp ${totalExpense.toLocaleString('id-ID')}`;
             document.getElementById('homeCloseMoney').innerText = `Rp ${closeMoney.toLocaleString('id-ID')}`;
 
-            // Analisis 3 Menu Terbanyak
-            let menuCountMap = {};
+            // Analisis 3 Menu Terbanyak: Kategori - Menu - Total Terjual (nilai Rp)
+            let menuSalesMap = {};
             validSalesTrx.forEach(trx => {
                 trx.items.forEach(i => {
-                    menuCountMap[i.name] = (menuCountMap[i.name] || 0) + i.qty;
+                    const key = i.id || `${i.category || ''}__${i.name}`;
+                    if(!menuSalesMap[key]) {
+                        menuSalesMap[key] = {
+                            category: i.category || '-',
+                            name: i.name,
+                            qty: 0,
+                            total: 0
+                        };
+                    }
+                    menuSalesMap[key].qty += i.qty;
+                    menuSalesMap[key].total += i.price * i.qty;
                 });
             });
-            let sortedMenus = Object.entries(menuCountMap).sort((a, b) => b[1] - a[1]).slice(0, 3);
+            let sortedMenus = Object.values(menuSalesMap).sort((a, b) => b.qty - a.qty).slice(0, 3);
             let topMenusEl = document.getElementById('homeTopMenus');
-            topMenusEl.innerHTML = sortedMenus.length === 0 ? '<li class="text-slate-500 italic">Belum ada penjualan.</li>' : sortedMenus.map(([name, qty], idx) => `<li>${idx + 1}. <b>${name}</b> (${qty} terjual)</li>`).join('');
+            topMenusEl.innerHTML = sortedMenus.length === 0 ? '<li class="text-slate-500 italic">Belum ada penjualan.</li>' : sortedMenus.map((item, idx) => `
+                <li class="flex items-center justify-between gap-2 py-1.5 border-b border-slate-700/60 last:border-b-0">
+                    <div class="min-w-0">
+                        <span class="text-slate-500 mr-1">${idx + 1}.</span>
+                        <b class="text-slate-200">${item.category}</b> <span class="text-slate-500">-</span> <span class="text-slate-300">${item.name}</span>
+                    </div>
+                    <span class="font-bold text-emerald-300 whitespace-nowrap">Rp ${item.total.toLocaleString('id-ID')}</span>
+                </li>`).join('');
 
             // Analisis Omset per Kanal Terbanyak
             let channelMap = {};
