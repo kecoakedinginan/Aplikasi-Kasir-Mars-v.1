@@ -220,17 +220,23 @@ button, [role="button"], a{
 }
 main button:active{transform:scale(.975)!important}
 #checkoutBtn{
+  width:100%!important;
   min-width:0!important;
-  width:auto!important;
-  height:44px!important;
-  min-height:44px!important;
-  padding:0 15px!important;
+  height:46px!important;
+  min-height:46px!important;
+  padding:0 14px!important;
   line-height:1!important;
   box-shadow:0 8px 20px var(--primary-soft)!important;
 }
 #checkoutBtn:active{transform:scale(.96)!important}
+#posCategorySelect{appearance:auto;-webkit-appearance:auto}
+#posMenuGrid{align-items:stretch}
+#posMenuGrid > div{min-width:0;min-height:132px}
+#posMenuGrid h5{line-height:1.35;overflow-wrap:anywhere}
 @media(max-width:420px){
-  #checkoutBtn{padding:0 12px!important;font-size:13px!important}
+  #posMenuGrid{gap:8px!important}
+  #posMenuGrid > div{padding:10px!important;min-height:126px}
+  #checkoutBtn{font-size:13px!important}
 }
 </style>
 
@@ -361,21 +367,27 @@ main button:active{transform:scale(.975)!important}
             <div class="bg-slate-800/60 border border-slate-700/80 p-5 rounded-2xl shadow-lg">
                 <h2 class="text-lg font-bold text-emerald-300 mb-3">POS / Transaksi Penjualan</h2>
                 
-                <div id="posCategoryFilter" class="flex flex-wrap gap-2 mb-4"></div>
+                <div class="mb-4">
+  <label for="posCategorySelect" class="block text-xs font-semibold text-slate-400 mb-1.5">Kategori Menu</label>
+  <select id="posCategorySelect" onchange="filterPosCat(this.value)" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-3 text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500/30">
+  </select>
+</div>
                 <div id="posMenuGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6"></div>
 
                 <div class="border-t border-slate-700 pt-4">
                     <h3 class="text-sm font-semibold text-slate-200 mb-2">Keranjang Pesanan</h3>
                     <div id="cartList" class="space-y-2 mb-3 max-h-48 overflow-y-auto pr-1"></div>
                     
-                    <div class="flex flex-col sm:flex-row justify-between items-center gap-3 bg-slate-900 p-3 rounded-2xl border border-slate-700">
-                        <div>
-                            <p class="text-xs text-slate-400">Total Pembayaran</p>
-                            <p id="cartTotalText" class="text-lg font-bold text-emerald-400">Rp 0</p>
+                    <div class="flex flex-col gap-3 bg-slate-900 p-3 rounded-2xl border border-slate-700">
+                        <div class="flex items-center justify-between gap-3">
+                            <div>
+                                <p class="text-xs text-slate-400">Total Pembayaran</p>
+                                <p id="cartTotalText" class="text-lg font-bold text-emerald-400">Rp 0</p>
+                            </div>
                         </div>
-                        <div class="flex gap-2 w-full sm:w-auto">
+                        <div class="grid grid-cols-1 gap-2">
                             <!-- KOL dimasukkan bersanding di kanal transaksi -->
-                            <select id="paymentChannel" class="bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none">
+                            <select id="paymentChannel" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none">
                                 <option value="Cash">Cash (Offline)</option>
                                 <option value="QRIS">QRIS (Offline)</option>
                                 <option value="Grab">Grab (Online)</option>
@@ -383,7 +395,7 @@ main button:active{transform:scale(.975)!important}
                                 <option value="Gofood">Gofood (Online)</option>
                                 <option value="KOL">KOL (Endorse / Non-Revenue)</option>
                             </select>
-                            <button id="checkoutBtn" onclick="checkoutOrder()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl text-sm font-semibold transition shadow-md flex-none whitespace-nowrap">Proses Transaksi</button>
+                            <button id="checkoutBtn" onclick="checkoutOrder()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl text-sm font-semibold transition shadow-md">Proses Transaksi</button>
                         </div>
                     </div>
                 </div>
@@ -803,13 +815,14 @@ main button:active{transform:scale(.975)!important}
         let activePosCategory = 'All';
 
         function renderPosCategoryFilter() {
-            const filterContainer = document.getElementById('posCategoryFilter');
-            filterContainer.innerHTML = `<button onclick="filterPosCat('All')" class="px-3 py-1.5 rounded-xl text-xs font-medium transition ${activePosCategory === 'All' ? 'bg-emerald-600 text-white' : 'bg-slate-800 text-slate-300 border border-slate-700'}">Semua</button>`;
-            
+            const select = document.getElementById('posCategorySelect');
+            if(!select) return;
+            const options = [`<option value="All">Semua Kategori</option>`];
             appData.categories.forEach(cat => {
-                const isActive = activePosCategory === cat.name;
-                filterContainer.innerHTML += `<button onclick="filterPosCat('${cat.name}')" class="px-3 py-1.5 rounded-xl text-xs font-medium transition ${isActive ? 'bg-emerald-600 text-white' : 'bg-slate-800 text-slate-300 border border-slate-700'}">${cat.name}</button>`;
+                options.push(`<option value="${cat.name.replace(/"/g, '&quot;')}">${cat.name}</option>`);
             });
+            select.innerHTML = options.join('');
+            select.value = activePosCategory;
         }
 
         function filterPosCat(catName) {
