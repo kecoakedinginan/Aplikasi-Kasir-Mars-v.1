@@ -1,1 +1,240 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loyverse POS Daily Report - Ultimate Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans antialiased min-h-screen flex flex-col justify-between pb-24">
 
+    <!-- TOP HEADER / GLOBAL BAR -->
+    <header class="bg-emerald-950 border-b border-emerald-900 p-4 shadow-md rounded-b-2xl mx-2 mt-2">
+        <div class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3">
+            <div class="flex items-center gap-3">
+                <div class="bg-emerald-600 p-2.5 rounded-xl shadow-inner text-white font-bold text-lg">POS</div>
+                <div>
+                    <h1 id="headerOutletName" class="text-lg font-bold text-emerald-100">Outlet Utama</h1>
+                    <p class="text-xs text-emerald-400">Kasir: <span id="headerCashierName" class="font-semibold text-white">Admin</span></p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4 text-xs bg-emerald-900/60 px-4 py-2 rounded-xl border border-emerald-800">
+                <div>📅 <span id="headerDateDisplay" class="font-medium text-emerald-200"></span></div>
+                <div>🕒 Masuk: <span id="headerTimeIn" class="font-medium text-emerald-200">-</span> | Closing: <span id="headerTimeOut" class="font-medium text-emerald-200">-</span></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-4xl w-full mx-auto p-4 flex-grow">
+        
+        <!-- ================= TAB HOME (DASHBOARD UTAMA) ================= -->
+        <div id="tab-home" class="tab-content active space-y-4">
+            <div class="bg-emerald-900/40 border border-emerald-800/60 p-5 rounded-2xl shadow-lg backdrop-blur-md">
+                <h2 class="text-lg font-bold text-emerald-200 mb-3">Ringkasan Operasional Harian</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+                    <div class="bg-slate-800/80 p-4 rounded-2xl border border-slate-700">
+                        <p class="text-xs text-slate-400">Total Penjualan</p>
+                        <p id="homeTotalSales" class="text-lg font-extrabold text-emerald-400 mt-1">Rp 0</p>
+                    </div>
+                    <div class="bg-slate-800/80 p-4 rounded-2xl border border-slate-700">
+                        <p class="text-xs text-slate-400">Offline / Online</p>
+                        <p id="homeBreakdownSales" class="text-xs font-bold text-slate-200 mt-2">Off: Rp 0 | On: Rp 0</p>
+                    </div>
+                    <div class="bg-slate-800/80 p-4 rounded-2xl border border-slate-700">
+                        <p class="text-xs text-slate-400">Total Pengeluaran</p>
+                        <p id="homeTotalExpense" class="text-lg font-extrabold text-rose-400 mt-1">Rp 0</p>
+                    </div>
+                    <div class="bg-slate-800/80 p-4 rounded-2xl border border-slate-700">
+                        <p class="text-xs text-slate-400">Close Uang Outlet</p>
+                        <p id="homeCloseMoney" class="text-lg font-extrabold text-cyan-400 mt-1">Rp 0</p>
+                    </div>
+                </div>
+
+                <!-- Tambahan Analisis Home: 3 Menu Terbanyak & Omset per Kanal -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div class="bg-slate-800/80 p-4 rounded-2xl border border-slate-700">
+                        <p class="text-xs font-semibold text-emerald-300 mb-2">🔥 3 Menu Terbanyak Terjual</p>
+                        <ul id="homeTopMenus" class="text-xs text-slate-300 space-y-1">
+                            <li class="text-slate-500 italic">Belum ada data penjualan.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-slate-800/80 p-4 rounded-2xl border border-slate-700">
+                        <p class="text-xs font-semibold text-cyan-300 mb-2">💳 Omset Terbanyak Berdasarkan Kanal</p>
+                        <div id="homeTopChannel" class="text-xs text-slate-300 space-y-1">
+                            <p class="text-slate-500 italic">Belum ada data kanal.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-800/60 border border-slate-700/80 p-5 rounded-2xl shadow-lg">
+                <h3 class="text-md font-semibold text-slate-200 mb-3">Informasi Shift, Tanggal & Jam Kerja</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm mb-4">
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">Nama Outlet</label>
+                        <input type="text" id="inputOutletName" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-500" value="Outlet Utama">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">Nama Kasir</label>
+                        <input type="text" id="inputCashierName" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-500" value="Admin">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">Tanggal Harian (Editable)</label>
+                        <input type="date" id="inputDate" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-500">
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">Jam Masuk Kasir</label>
+                            <input type="time" id="inputTimeIn" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">Jam Closing Kasir</label>
+                            <input type="time" id="inputTimeOut" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-500">
+                        </div>
+                    </div>
+                </div>
+                <button onclick="saveHeaderInfo()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-medium px-5 py-2 rounded-xl text-sm transition shadow-md">Simpan Informasi Shift</button>
+            </div>
+        </div>
+
+        <!-- ================= TAB 1 (MASTER MENU) ================= -->
+        <div id="tab-menu" class="tab-content space-y-4">
+            <div class="bg-slate-800/60 border border-slate-700/80 p-5 rounded-2xl shadow-lg">
+                <h2 class="text-lg font-bold text-emerald-300 mb-3">Kelola Kategori & Menu</h2>
+                
+                <!-- Form Tambah Kategori -->
+                <div class="flex gap-2 mb-4">
+                    <input type="text" id="newCategoryName" placeholder="Contoh: Makanan Berat..." class="flex-grow bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-emerald-500">
+                    <input type="color" id="newCategoryColor" value="#10b981" class="w-10 h-10 bg-slate-900 border border-slate-700 rounded-xl cursor-pointer p-1">
+                    <button onclick="addCategory()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl text-sm font-medium transition shadow-md">Tambah Kategori</button>
+                </div>
+
+                <!-- Form Tambah Menu dengan Titik Panduan Jelas -->
+                <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 mb-2">
+                    <input type="text" id="newMenuName" placeholder="• Nama Menu (cth: Ayam Geprek)" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-emerald-500">
+                    <select id="newMenuCategory" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-emerald-500"></select>
+                    <input type="number" id="newMenuPrice" placeholder="• Harga Rp (cth: 15000)" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-emerald-500">
+                    <button onclick="addMenuItem()" class="bg-cyan-600 hover:bg-cyan-500 text-white px-4 py-2 rounded-xl text-sm font-medium transition shadow-md">Tambah Menu</button>
+                </div>
+            </div>
+
+            <!-- Daftar Menu Dikelompokkan per Kategori -->
+            <div id="masterCategoryGroupedList" class="space-y-6"></div>
+        </div>
+
+        <!-- ================= TAB 2 (KASIR / TRANSAKSI) ================= -->
+        <div id="tab-kasir" class="tab-content space-y-4">
+            <div class="bg-slate-800/60 border border-slate-700/80 p-5 rounded-2xl shadow-lg">
+                <h2 class="text-lg font-bold text-emerald-300 mb-3">POS / Transaksi Penjualan</h2>
+                
+                <div id="posCategoryFilter" class="flex flex-wrap gap-2 mb-4"></div>
+                <div id="posMenuGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6"></div>
+
+                <div class="border-t border-slate-700 pt-4">
+                    <h3 class="text-sm font-semibold text-slate-200 mb-2">Keranjang Pesanan</h3>
+                    <div id="cartList" class="space-y-2 mb-3 max-h-48 overflow-y-auto pr-1"></div>
+                    
+                    <div class="flex flex-col sm:flex-row justify-between items-center gap-3 bg-slate-900 p-3 rounded-2xl border border-slate-700">
+                        <div>
+                            <p class="text-xs text-slate-400">Total Pembayaran</p>
+                            <p id="cartTotalText" class="text-lg font-bold text-emerald-400">Rp 0</p>
+                        </div>
+                        <div class="flex gap-2 w-full sm:w-auto">
+                            <!-- KOL dimasukkan bersanding di kanal transaksi -->
+                            <select id="paymentChannel" class="bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none">
+                                <option value="Cash">Cash (Offline)</option>
+                                <option value="QRIS">QRIS (Offline)</option>
+                                <option value="Grab">Grab (Online)</option>
+                                <option value="Shopee">Shopee (Online)</option>
+                                <option value="Gofood">Gofood (Online)</option>
+                                <option value="KOL">KOL (Endorse / Non-Revenue)</option>
+                            </select>
+                            <button onclick="checkoutOrder()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-2 rounded-xl text-sm font-medium transition shadow-md flex-grow sm:flex-grow-0">Proses Transaksi</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Riwayat dengan tombol hapus transaksi & penomoran dinamis Penjualan/KOL -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="bg-slate-800/60 border border-slate-700/80 p-4 rounded-2xl shadow-lg">
+                    <h3 class="text-sm font-semibold text-emerald-300 mb-2">Penjualan (Penjualan 1, 2...)</h3>
+                    <div id="salesListContainer" class="space-y-2 max-h-48 overflow-y-auto"></div>
+                </div>
+                <div class="bg-slate-800/60 border border-slate-700/80 p-4 rounded-2xl shadow-lg">
+                    <h3 class="text-sm font-semibold text-pink-400 mb-2">KOL (KOL 1, 2...)</h3>
+                    <div id="kolListContainer" class="space-y-2 max-h-48 overflow-y-auto"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 3 (KEUANGAN & MODAL) ================= -->
+        <div id="tab-keuangan" class="tab-content space-y-4">
+            <div class="bg-slate-800/60 border border-slate-700/80 p-5 rounded-2xl shadow-lg">
+                <h2 class="text-lg font-bold text-emerald-300 mb-3">Open Uang Outlet & Pengeluaran</h2>
+                
+                <div class="mb-4">
+                    <label class="block text-xs text-slate-400 mb-1">Modal Awal / Open Uang Outlet (Rp)</label>
+                    <input type="text" id="openUangInput" oninput="formatRupiahInput(this)" placeholder="0" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-emerald-500">
+                </div>
+
+                <h3 class="text-sm font-semibold text-slate-200 mb-2">Matrix Pengeluaran (Item, Harga, Qty)</h3>
+                <div id="expenseRows" class="space-y-2 mb-3"></div>
+                <button onclick="addExpenseRow()" class="bg-slate-700 hover:bg-slate-600 text-slate-200 px-4 py-2 rounded-xl text-xs font-medium transition shadow-md">+ Tambah Baris Pengeluaran</button>
+            </div>
+        </div>
+
+        <!-- ================= TAB 4 (EXPORT LAPORAN) ================= -->
+        <div id="tab-export" class="tab-content space-y-4">
+            <div class="bg-slate-800/60 border border-slate-700/80 p-5 rounded-2xl shadow-lg">
+                <h2 class="text-lg font-bold text-emerald-300 mb-3">Export Laporan Chat Format</h2>
+                <p class="text-xs text-slate-400 mb-3">Pratinjau laporan rinci harian siap salin ke grup.</p>
+                
+                <textarea id="exportReportText" readonly rows="14" class="w-full bg-slate-900 border border-slate-700 rounded-2xl p-3 text-xs text-slate-300 font-mono focus:outline-none mb-3"></textarea>
+                
+                <button onclick="copyReportText()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-medium px-5 py-2.5 rounded-xl text-sm transition shadow-md w-full sm:w-auto">Salin Laporan ke Clipboard</button>
+            </div>
+        </div>
+
+        <!-- ================= TAB 5 (PENGATURAN DASAR) ================= -->
+        <div id="tab-settings" class="tab-content space-y-4">
+            <div class="bg-slate-800/60 border border-slate-700/80 p-5 rounded-2xl shadow-lg">
+                <h2 class="text-lg font-bold text-emerald-300 mb-3">Pengaturan Dasar Sistem</h2>
+                <div class="space-y-4 text-sm">
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">Ganti Nama Outlet</label>
+                        <input type="text" id="settingOutletName" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">Ganti Nama Kasir</label>
+                        <input type="text" id="settingCashierName" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-500">
+                    </div>
+                    <button onclick="saveSettings()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-medium px-5 py-2 rounded-xl text-sm transition shadow-md">Simpan Pengaturan</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- MODERN NOTIFICATION POPUP -->
+    <div id="appNotification" class="fixed bottom-20 right-4 bg-emerald-600 text-white px-4 py-3 rounded-2xl shadow-xl transform translate-y-20 opacity-0 transition-all duration-300 z-50 text-xs font-medium flex items-center gap-2 border border-emerald-500">
+        <span>✅</span> <span id="notificationText">Berhasil menyimpan data!</span>
+    </div>
+
+    <!-- BOTTOM NAVIGATION BAR -->
+    <nav class="bg-slate-950/90 backdrop-blur-md border-t border-slate-800 p-2 fixed bottom-0 left-0 right-0 z-40 rounded-t-2xl shadow-2xl">
+        <div class="max-w-4xl mx-auto grid grid-cols-6 gap-1 text-center text-[10px] font-medium text-slate-400">
+            <button onclick="switchTab('home')" id="nav-home" class="py-2 rounded-xl hover:bg-slate-800 transition text-emerald-400 flex flex-col items-center"><span class="text-base">🏠</span> Home</button>
+            <button onclick="switchTab('menu')" id="nav-menu" class="py-2 rounded-xl hover:bg-slate-800 transition flex flex-col items-center"><span class="text-base">📋</span> Menu</button>
+            <button onclick="switchTab('kasir')" id="nav-kasir" class="py-2 rounded-xl hover:bg-slate-800 transition flex flex-col items-center"><span class="text-base">🛍️</span> Kasir</button>
+            <button onclick="switchTab('keuangan')" id="nav-keuangan" class="py-2 rounded-xl hover:bg-slate-800 transition flex flex-col items-center"><span class="text-base">💰</span> Keuangan</button>
+            <button onclick="switchTab('export')" id="nav-export" class="py-2 rounded-xl hover:bg-slate-800 transition flex flex-col items-center"><span class="text-base">📤</span> Laporan</button>
+            <button onclick="switchTab('settings')" id="nav-settings" class="py-2 rounded-xl hover:bg-slate-800 transition flex flex-col items-center"><span class="text-base">⚙️</span> Setting</button>
+        </div>
+    </nav>
+
+    <script src="script.js"></script>
+</body>
+</html>
