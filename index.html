@@ -306,11 +306,11 @@ main button:active{transform:scale(.975)!important}
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm mb-4">
                     <div>
                         <label class="block text-xs text-slate-400 mb-1">Nama Outlet</label>
-                        <input type="text" id="inputOutletName" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-500" value="Outlet Utama">
+                        <input type="text" id="inputOutletName" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-500" value="Mars 1930 Tamalate">
                     </div>
                     <div>
                         <label class="block text-xs text-slate-400 mb-1">Nama Kasir</label>
-                        <input type="text" id="inputCashierName" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-500" value="Admin">
+                        <input type="text" id="inputCashierName" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-500" value="">
                     </div>
                     <div>
                         <label class="block text-xs text-slate-400 mb-1">Tanggal Harian (Editable)</label>
@@ -426,7 +426,7 @@ main button:active{transform:scale(.975)!important}
                 
                 <textarea id="exportReportText" readonly rows="14" class="w-full bg-slate-900 border border-slate-700 rounded-2xl p-3 text-xs text-slate-300 font-mono focus:outline-none mb-3"></textarea>
                 
-                <button onclick="copyReportText()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-medium px-5 py-2.5 rounded-xl text-sm transition shadow-md w-full sm:w-auto">Salin Laporan ke Clipboard</button>
+                <button id="copyReportBtn" onclick="copyReportText()" disabled class="bg-slate-700 text-slate-400 font-medium px-5 py-2.5 rounded-xl text-sm transition shadow-md w-full sm:w-auto cursor-not-allowed opacity-60">Salin Laporan ke Clipboard</button>
             </div>
         </div>
 
@@ -438,7 +438,7 @@ main button:active{transform:scale(.975)!important}
                     <div class="profile-card">
                         <img id="settingsProfileImage" class="profile-avatar" alt="Foto profil">
                         <div class="profile-card-info">
-                            <strong id="profilePreviewName">Admin</strong>
+                            <strong id="profilePreviewName">-</strong>
                             <span>Foto profil kasir</span>
                         </div>
                         <button type="button" class="profile-upload" onclick="document.getElementById('profileImageInput').click()">Ubah Foto</button>
@@ -496,18 +496,59 @@ main button:active{transform:scale(.975)!important}
     <!-- JAVASCRIPT LOGIC LENGKAP -->
     <script>
         let appData = {
-            outletName: "Outlet Utama",
-            cashierName: "Admin",
-            date: new Date().toISOString().split('T')[0],
-            timeIn: "08:00",
-            timeOut: "21:00",
+            outletName: "Mars 1930 Tamalate",
+            cashierName: "",
+            date: (() => {
+                const d = new Date();
+                return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+            })(),
+            timeIn: "",
+            timeOut: "",
             categories: [
-                { id: 'cat1', name: 'Makanan', color: '#f59e0b' },
-                { id: 'cat2', name: 'Minuman', color: '#3b82f6' }
+                { id: 'cat1', name: 'MARTABAK', color: '#f59e0b' },
+                { id: 'cat2', name: 'TERANG BULAN', color: '#3b82f6' },
+                { id: 'cat3', name: 'MARTABAK HEMAT', color: '#10b981' },
+                { id: 'cat4', name: 'TERANG BULAN HEMAT', color: '#8b5cf6' },
+                { id: 'cat5', name: 'PAKET BUNDLING', color: '#ef4444' },
+                { id: 'cat6', name: 'PAKET PUAS HEMAT', color: '#f97316' }
             ],
             menuItems: [
-                { id: 'm1', name: 'Nasi Goreng Special', category: 'Makanan', price: 25000, isNew: true },
-                { id: 'm2', name: 'Es Teh Manis', category: 'Minuman', price: 5000, isNew: true }
+                { id: 'm1', name: 'BIASA', category: 'MARTABAK', price: 15000, isNew: false },
+                { id: 'm2', name: 'ISTIMEWA', category: 'MARTABAK', price: 25000, isNew: false },
+                { id: 'm3', name: 'JUMBO', category: 'MARTABAK', price: 47000, isNew: false },
+                { id: 'm4', name: 'SIGNATURE', category: 'MARTABAK', price: 45000, isNew: false },
+                { id: 'm5', name: 'COKLAT', category: 'TERANG BULAN', price: 18000, isNew: false },
+                { id: 'm6', name: 'KEJU', category: 'TERANG BULAN', price: 18000, isNew: false },
+                { id: 'm7', name: 'KACANG', category: 'TERANG BULAN', price: 18000, isNew: false },
+                { id: 'm8', name: 'COKLAT KEJU', category: 'TERANG BULAN', price: 27000, isNew: false },
+                { id: 'm9', name: 'COKLAT KACANG', category: 'TERANG BULAN', price: 25000, isNew: false },
+                { id: 'm10', name: 'COKLAT KEJU KACANG', category: 'TERANG BULAN', price: 35000, isNew: false },
+                { id: 'm11', name: 'CHOCOCRUNCY', category: 'TERANG BULAN', price: 25000, isNew: false },
+                { id: 'm12', name: 'BIASA', category: 'MARTABAK HEMAT', price: 11000, isNew: false },
+                { id: 'm13', name: 'ISTIMEWA', category: 'MARTABAK HEMAT', price: 21000, isNew: false },
+                { id: 'm14', name: 'JUMBO', category: 'MARTABAK HEMAT', price: 42000, isNew: false },
+                { id: 'm15', name: 'SIGNATURE', category: 'MARTABAK HEMAT', price: 40000, isNew: false },
+                { id: 'm16', name: 'COKLAT', category: 'TERANG BULAN HEMAT', price: 13000, isNew: false },
+                { id: 'm17', name: 'KEJU', category: 'TERANG BULAN HEMAT', price: 13000, isNew: false },
+                { id: 'm18', name: 'KACANG', category: 'TERANG BULAN HEMAT', price: 13000, isNew: false },
+                { id: 'm19', name: 'COKLAT KEJU', category: 'TERANG BULAN HEMAT', price: 23000, isNew: false },
+                { id: 'm20', name: 'COKLAT KACANG', category: 'TERANG BULAN HEMAT', price: 20000, isNew: false },
+                { id: 'm21', name: 'COKLAT KEJU KACANG', category: 'TERANG BULAN HEMAT', price: 30000, isNew: false },
+                { id: 'm22', name: 'CHOCOCRUNCY', category: 'TERANG BULAN HEMAT', price: 18000, isNew: false },
+                { id: 'm23', name: '1', category: 'PAKET BUNDLING', price: 45000, isNew: false },
+                { id: 'm24', name: '2', category: 'PAKET BUNDLING', price: 45000, isNew: false },
+                { id: 'm25', name: '3', category: 'PAKET BUNDLING', price: 48000, isNew: false },
+                { id: 'm26', name: '4', category: 'PAKET BUNDLING', price: 54000, isNew: false },
+                { id: 'm27', name: '5', category: 'PAKET BUNDLING', price: 55000, isNew: false },
+                { id: 'm28', name: '6', category: 'PAKET BUNDLING', price: 57000, isNew: false },
+                { id: 'm29', name: '7', category: 'PAKET BUNDLING', price: 62000, isNew: false },
+                { id: 'm30', name: '8', category: 'PAKET BUNDLING', price: 64000, isNew: false },
+                { id: 'm31', name: '9', category: 'PAKET BUNDLING', price: 77000, isNew: false },
+                { id: 'm32', name: '10', category: 'PAKET BUNDLING', price: 77000, isNew: false },
+                { id: 'm33', name: '1', category: 'PAKET PUAS HEMAT', price: 32000, isNew: false },
+                { id: 'm34', name: '2', category: 'PAKET PUAS HEMAT', price: 32000, isNew: false },
+                { id: 'm35', name: '3', category: 'PAKET PUAS HEMAT', price: 34000, isNew: false },
+                { id: 'm36', name: '4', category: 'PAKET PUAS HEMAT', price: 37000, isNew: false }
             ],
             cart: [],
             transactions: [],
@@ -515,11 +556,28 @@ main button:active{transform:scale(.975)!important}
             expenses: [{ item: '', price: 0, qty: 1 }]
         };
 
+
+        // Pastikan daftar menu langsung tampil saat halaman pertama kali dibuka.
+        document.addEventListener('DOMContentLoaded', function() {
+            renderCategories();
+            renderMasterGroupedList();
+            renderPosCategoryFilter();
+            renderPosMenuGrid();
+        });
+
+        document.addEventListener('input', function(e) {
+            if (['inputCashierName', 'inputTimeIn', 'inputTimeOut'].includes(e.target?.id)) {
+                updateReportCopyState();
+            }
+        });
+
         window.onload = function() {
             loadProfileImage();
             document.getElementById('inputDate').value = appData.date;
-            document.getElementById('inputTimeIn').value = appData.timeIn;
-            document.getElementById('inputTimeOut').value = appData.timeOut;
+            document.getElementById('inputOutletName').value = 'Mars 1930 Tamalate';
+            document.getElementById('inputCashierName').value = '';
+            document.getElementById('inputTimeIn').value = '';
+            document.getElementById('inputTimeOut').value = '';
             updateHeaderDisplay();
             renderCategories();
             renderMasterGroupedList();
@@ -529,6 +587,8 @@ main button:active{transform:scale(.975)!important}
             renderExpenses();
             updateDashboardSummaries();
             generateReportText();
+            setupReportCopyProtection();
+            updateReportCopyState();
             
             document.getElementById('settingOutletName').value = appData.outletName;
             document.getElementById('settingCashierName').value = appData.cashierName;
@@ -559,6 +619,68 @@ main button:active{transform:scale(.975)!important}
             setTimeout(() => { notif.classList.add('translate-y-20', 'opacity-0'); }, 2500);
         }
 
+        function isShiftComplete() {
+            return Boolean(
+                document.getElementById('inputCashierName')?.value.trim() &&
+                document.getElementById('inputTimeIn')?.value &&
+                document.getElementById('inputTimeOut')?.value
+            );
+        }
+
+        function updateReportCopyState() {
+            const btn = document.getElementById('copyReportBtn');
+            const textarea = document.getElementById('exportReportText');
+            if (!btn) return;
+            const ready = isShiftComplete();
+            btn.disabled = !ready;
+            btn.classList.toggle('bg-emerald-600', ready);
+            btn.classList.toggle('hover:bg-emerald-500', ready);
+            btn.classList.toggle('text-white', ready);
+            btn.classList.toggle('bg-slate-700', !ready);
+            btn.classList.toggle('text-slate-400', !ready);
+            btn.classList.toggle('cursor-not-allowed', !ready);
+            btn.classList.toggle('opacity-60', !ready);
+
+            // Sebelum shift lengkap, laporan juga tidak boleh disalin manual
+            // lewat Ctrl/Cmd+C, menu konteks, cut, atau seleksi teks.
+            if (textarea) {
+                textarea.style.userSelect = ready ? 'text' : 'none';
+                textarea.style.webkitUserSelect = ready ? 'text' : 'none';
+                textarea.style.cursor = ready ? 'text' : 'not-allowed';
+                textarea.setAttribute('aria-disabled', ready ? 'false' : 'true');
+            }
+        }
+
+        function setupReportCopyProtection() {
+            const textarea = document.getElementById('exportReportText');
+            if (!textarea) return;
+
+            const blockIfShiftIncomplete = (e) => {
+                if (!isShiftComplete()) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    showNotification('Laporan belum bisa disalin. Lengkapi Nama Kasir, Jam Masuk, dan Jam Closing terlebih dahulu.');
+                    return true;
+                }
+                return false;
+            };
+
+            textarea.addEventListener('copy', blockIfShiftIncomplete);
+            textarea.addEventListener('cut', blockIfShiftIncomplete);
+            textarea.addEventListener('contextmenu', blockIfShiftIncomplete);
+            textarea.addEventListener('selectstart', blockIfShiftIncomplete);
+            textarea.addEventListener('dragstart', blockIfShiftIncomplete);
+            textarea.addEventListener('keydown', function(e) {
+                if (!isShiftComplete() && (e.ctrlKey || e.metaKey) && ['c', 'x'].includes(e.key.toLowerCase())) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    showNotification('Laporan belum bisa disalin. Lengkapi data shift terlebih dahulu.');
+                }
+            });
+
+            updateReportCopyState();
+        }
+
         function saveHeaderInfo() {
             appData.outletName = document.getElementById('inputOutletName').value;
             appData.cashierName = document.getElementById('inputCashierName').value;
@@ -570,6 +692,8 @@ main button:active{transform:scale(.975)!important}
             document.getElementById('headerCashierName').innerText = appData.cashierName;
             if(document.getElementById('profilePreviewName')) document.getElementById('profilePreviewName').innerText = appData.cashierName;
             updateHeaderDisplay();
+            generateReportText();
+            updateReportCopyState();
             showNotification("Informasi shift & tanggal berhasil disimpan!");
         }
 
@@ -958,6 +1082,11 @@ main button:active{transform:scale(.975)!important}
         }
 
         function copyReportText() {
+            if (!isShiftComplete()) {
+                updateReportCopyState();
+                showNotification("Isi Nama Kasir, Jam Masuk Kasir, dan Jam Closing Kasir terlebih dahulu.");
+                return;
+            }
             const textarea = document.getElementById('exportReportText');
             textarea.select();
             navigator.clipboard.writeText(textarea.value);
