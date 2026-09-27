@@ -9,6 +9,231 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; }
     </style>
+
+<style id="modern-theme">
+:root{
+  --bg:#f4f7fb; --surface:#ffffff; --surface-2:#f8fafc; --surface-3:#eef2f7;
+  --text:#172033; --muted:#64748b; --border:#e2e8f0; --primary:#10b981;
+  --primary-strong:#059669; --primary-soft:rgba(16,185,129,.12);
+  --danger:#ef4444; --info:#06b6d4; --shadow:0 12px 35px rgba(15,23,42,.08);
+}
+html[data-theme="dark"]{
+  --bg:#0b1120; --surface:#111827; --surface-2:#172033; --surface-3:#1e293b;
+  --text:#e5edf8; --muted:#94a3b8; --border:#293548; --primary:#34d399;
+  --primary-strong:#10b981; --primary-soft:rgba(52,211,153,.13);
+  --shadow:0 16px 45px rgba(0,0,0,.28);
+}
+html[data-accent="blue"]{--primary:#3b82f6;--primary-strong:#2563eb;--primary-soft:rgba(59,130,246,.12)}
+html[data-accent="purple"]{--primary:#8b5cf6;--primary-strong:#7c3aed;--primary-soft:rgba(139,92,246,.12)}
+html[data-accent="rose"]{--primary:#f43f5e;--primary-strong:#e11d48;--primary-soft:rgba(244,63,94,.12)}
+html[data-accent="orange"]{--primary:#f97316;--primary-strong:#ea580c;--primary-soft:rgba(249,115,22,.12)}
+html[data-accent="cyan"]{--primary:#06b6d4;--primary-strong:#0891b2;--primary-soft:rgba(6,182,212,.12)}
+
+*{box-sizing:border-box}
+html{background:var(--bg);transition:background .25s ease}
+body{
+  background:
+    radial-gradient(circle at 10% 0%, var(--primary-soft), transparent 28rem),
+    radial-gradient(circle at 100% 10%, rgba(99,102,241,.07), transparent 25rem),
+    var(--bg)!important;
+  color:var(--text)!important; transition:background .25s,color .25s;
+  letter-spacing:.005em;
+}
+header{
+  background:color-mix(in srgb,var(--surface) 92%,var(--primary) 8%)!important;
+  border:1px solid var(--border)!important; border-top:3px solid var(--primary)!important;
+  box-shadow:var(--shadow)!important; border-radius:24px!important;
+}
+main{max-width:1100px!important;padding-top:1.25rem!important}
+.tab-content{animation:fadeUp .25s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+
+main .bg-emerald-900\/40,main .bg-slate-800\/60,main .bg-slate-800\/80,
+main .bg-slate-900\/80,main .bg-slate-900,main .bg-slate-800{
+  background:var(--surface)!important;border-color:var(--border)!important;
+  box-shadow:var(--shadow)!important;
+}
+main .bg-slate-800\/80{background:var(--surface-2)!important;box-shadow:none!important}
+main input,main select,main textarea{
+  background:var(--surface-2)!important;color:var(--text)!important;border-color:var(--border)!important;
+  border-radius:14px!important; transition:border .2s,box-shadow .2s,background .2s;
+}
+main input:focus,main select:focus,main textarea:focus{
+  border-color:var(--primary)!important;box-shadow:0 0 0 4px var(--primary-soft)!important;
+}
+main button{
+  border-radius:13px!important; transition:transform .15s,box-shadow .15s,background .2s!important;
+}
+main button:hover{transform:translateY(-1px)}
+main h1,main h2,main h3,main p,main label,main li{color:var(--text)}
+main .text-slate-400,main .text-slate-500{color:var(--muted)!important}
+main .text-slate-200,main .text-slate-300{color:var(--text)!important}
+main .text-emerald-200,main .text-emerald-300,main .text-emerald-400,
+main .text-cyan-300,main .text-cyan-400{color:var(--primary)!important}
+main .bg-emerald-600{background:var(--primary)!important}
+main .hover\:bg-emerald-500:hover{background:var(--primary-strong)!important}
+main .border-emerald-800,main .border-emerald-800\/60,main .border-emerald-900{border-color:var(--border)!important}
+nav{
+  background:color-mix(in srgb,var(--surface) 94%,var(--primary) 6%)!important;
+  border-color:var(--border)!important; box-shadow:0 -12px 35px rgba(15,23,42,.10)!important;
+  padding:10px!important;
+}
+nav button{color:var(--muted)!important}
+nav button:hover{background:var(--primary-soft)!important;color:var(--primary)!important}
+nav button.text-emerald-400{color:var(--primary)!important;background:var(--primary-soft)}
+#appNotification{background:var(--primary)!important;border-color:var(--primary)!important}
+.theme-control{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px;
+  background:var(--surface-2);border:1px solid var(--border);border-radius:18px;
+}
+.theme-control label{font-size:12px;font-weight:700;color:var(--text)}
+.theme-switch{
+  display:flex;gap:8px;background:var(--surface-3);padding:5px;border-radius:14px;
+}
+.theme-switch button{
+  border:0;padding:8px 12px;border-radius:10px;font-size:12px;font-weight:700;
+  color:var(--muted);background:transparent;cursor:pointer;
+}
+.theme-switch button.active{background:var(--surface);color:var(--primary);box-shadow:0 3px 12px rgba(0,0,0,.08)}
+.swatches{display:flex;gap:9px;flex-wrap:wrap}
+.swatch{width:30px;height:30px;border-radius:50%;border:3px solid transparent;cursor:pointer;box-shadow:0 0 0 1px var(--border)}
+.swatch.active{border-color:var(--text);box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--primary)}
+@media(max-width:640px){
+  header{margin:8px!important;border-radius:20px!important}
+  header .max-w-4xl>div:last-child{width:100%;justify-content:center}
+  main{padding:12px!important;padding-bottom:92px!important}
+  nav{border-radius:20px 20px 0 0!important}
+  nav .text-base{font-size:1rem}
+}
+</style>
+
+
+<style id="modern-theme-v2">
+/* Contrast + modern UI pass */
+:root{
+  --bg:#f6f8fc;--surface:#ffffff;--surface-2:#f8fafc;--surface-3:#eef2f7;
+  --text:#0f172a;--text-strong:#0b1220;--muted:#475569;--muted-2:#64748b;
+  --border:#d9e1ec;--primary:#10b981;--primary-strong:#059669;--primary-soft:rgba(16,185,129,.11);
+  --shadow:0 10px 30px rgba(15,23,42,.07);--shadow-hover:0 16px 40px rgba(15,23,42,.11);
+}
+html[data-theme="dark"]{
+  --bg:#080d18;--surface:#111827;--surface-2:#151f30;--surface-3:#1d293b;
+  --text:#e5edf8;--text-strong:#f8fafc;--muted:#a7b4c7;--muted-2:#94a3b8;
+  --border:#2a3950;--primary:#34d399;--primary-strong:#10b981;--primary-soft:rgba(52,211,153,.14);
+  --shadow:0 14px 38px rgba(0,0,0,.28);--shadow-hover:0 18px 46px rgba(0,0,0,.38);
+}
+html[data-accent="blue"]{--primary:#3b82f6;--primary-strong:#2563eb;--primary-soft:rgba(59,130,246,.12)}
+html[data-accent="purple"]{--primary:#8b5cf6;--primary-strong:#7c3aed;--primary-soft:rgba(139,92,246,.12)}
+html[data-accent="rose"]{--primary:#f43f5e;--primary-strong:#e11d48;--primary-soft:rgba(244,63,94,.12)}
+html[data-accent="orange"]{--primary:#f97316;--primary-strong:#ea580c;--primary-soft:rgba(249,115,22,.12)}
+html[data-accent="cyan"]{--primary:#06b6d4;--primary-strong:#0891b2;--primary-soft:rgba(6,182,212,.12)}
+
+body{color:var(--text)!important;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(180deg,var(--primary-soft),transparent 18rem);z-index:-1}
+header{padding:14px!important;border-radius:20px!important;margin:10px!important;border:1px solid var(--border)!important;border-top:3px solid var(--primary)!important;background:color-mix(in srgb,var(--surface) 96%,var(--primary) 4%)!important;box-shadow:var(--shadow)!important}
+header h1{color:var(--text-strong)!important}
+header p{color:var(--muted)!important}
+header .text-white{color:var(--text-strong)!important}
+header .text-emerald-100,header .text-emerald-200,header .text-emerald-400{color:var(--muted)!important}
+header>div>div:last-child{background:var(--surface-2)!important;border-color:var(--border)!important;color:var(--muted)!important}
+main{max-width:1180px!important;padding-top:14px!important}
+main>div.tab-content>div{border-radius:20px!important;border-color:var(--border)!important}
+main .bg-emerald-900\/40,main .bg-slate-800\/60,main .bg-slate-800\/80,main .bg-slate-900\/80,main .bg-slate-900,main .bg-slate-800{background:var(--surface)!important;border-color:var(--border)!important;box-shadow:var(--shadow)!important}
+main .bg-slate-800\/80{background:var(--surface-2)!important;box-shadow:none!important}
+main input,main select,main textarea{background:var(--surface-2)!important;color:var(--text)!important;border:1px solid var(--border)!important}
+main input::placeholder,main textarea::placeholder{color:var(--muted-2)!important;opacity:1}
+main input:focus,main select:focus,main textarea:focus{border-color:var(--primary)!important;box-shadow:0 0 0 4px var(--primary-soft)!important}
+main h1,main h2,main h3,main h4,main p,main label,main li,main span{color:var(--text)}
+main .text-slate-950,main .text-slate-900,main .text-slate-800,main .text-slate-700,main .text-slate-600,main .text-slate-500,main .text-slate-400,main .text-slate-300,main .text-slate-200{color:var(--text)!important}
+main .text-slate-500,main .text-slate-400{color:var(--muted)!important}
+main .text-white{color:#fff!important}
+main .text-emerald-200,main .text-emerald-300,main .text-emerald-400,main .text-cyan-300,main .text-cyan-400{color:var(--primary)!important}
+main .bg-emerald-600,main .bg-emerald-500{background:var(--primary)!important}
+main .hover\\:bg-emerald-500:hover{background:var(--primary-strong)!important}
+main button{box-shadow:0 5px 16px rgba(15,23,42,.06)!important}
+main button:hover{box-shadow:var(--shadow-hover)!important}
+nav{padding:8px!important;background:color-mix(in srgb,var(--surface) 96%,var(--primary) 4%)!important;border-color:var(--border)!important;box-shadow:0 -10px 35px rgba(15,23,42,.12)!important}
+nav button{color:var(--muted)!important;position:relative}
+nav button:hover{background:var(--primary-soft)!important;color:var(--primary)!important}
+nav button.text-emerald-400{color:var(--primary)!important;background:var(--primary-soft)!important}
+nav button.text-emerald-400:after{content:"";position:absolute;bottom:3px;left:50%;width:22px;height:3px;transform:translateX(-50%);border-radius:999px;background:var(--primary)}
+.nav-icon{width:22px;height:22px;display:block;margin-bottom:4px;stroke:currentColor;stroke-width:1.9;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.theme-control{background:var(--surface-2)!important;border-color:var(--border)!important}
+.theme-switch{background:var(--surface-3)!important}
+.theme-switch button{color:var(--muted)!important}
+.theme-switch button.active{background:var(--surface)!important;color:var(--primary)!important}
+.swatch{box-shadow:0 0 0 1px var(--border)!important}
+#appNotification{background:var(--primary)!important;border-color:var(--primary)!important}
+@media(max-width:640px){header{margin:7px!important;border-radius:18px!important}main{padding:10px!important;padding-bottom:88px!important}nav{border-radius:18px 18px 0 0!important}.nav-icon{width:20px;height:20px}}
+</style>
+
+
+<style id="mobile-app-ui">
+:root{--mobile-radius:22px}
+html,body{width:100%;min-width:0;overflow-x:hidden}
+body{padding-bottom:86px!important}
+header{position:sticky;top:0;z-index:35;margin:0!important;border-radius:0 0 22px 22px!important;padding:12px 14px!important;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+header .max-w-4xl{width:100%;max-width:none!important;gap:10px!important;align-items:center!important;flex-direction:row!important}
+header .max-w-4xl>div:first-child{min-width:0;flex:1}
+header .max-w-4xl>div:last-child{display:none!important}
+main{width:100%!important;max-width:none!important;padding:12px 12px 100px!important}
+.tab-content{width:100%}
+.tab-content>div{border-radius:var(--mobile-radius)!important;padding:15px!important}
+.tab-content .grid{grid-template-columns:1fr!important}
+#tab-home .grid.sm\:grid-cols-2,#tab-home .grid.lg\:grid-cols-4{grid-template-columns:1fr 1fr!important}
+#tab-home .grid.grid-cols-1.sm\:grid-cols-2{grid-template-columns:1fr!important}
+input,select,textarea,button{font-size:14px!important;min-height:44px}
+input[type="color"]{min-height:44px}
+main .grid.grid-cols-2{grid-template-columns:1fr 1fr!important}
+#tab-menu .flex.gap-2{flex-direction:column!important}
+#tab-menu .flex.gap-2 input,#tab-menu .flex.gap-2 button{width:100%!important}
+#tab-kasir .grid{grid-template-columns:1fr!important}
+#posMenuGrid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+#cartList{max-height:none!important}
+nav{left:8px!important;right:8px!important;bottom:8px!important;border:1px solid var(--border)!important;border-radius:22px!important;padding:6px!important;box-shadow:0 12px 40px rgba(15,23,42,.20)!important;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+nav>div{max-width:none!important;grid-template-columns:repeat(6,1fr)!important;gap:2px!important}
+nav button{min-height:58px!important;padding:7px 2px!important;border-radius:16px!important;font-size:10px!important;box-shadow:none!important}
+.nav-icon{width:20px!important;height:20px!important;margin-bottom:4px!important}
+.profile-avatar{width:44px;height:44px;border-radius:15px;object-fit:cover;display:block;background:var(--primary-soft);border:2px solid var(--primary);flex:none}
+.profile-avatar-button{position:relative;border:0;background:none;padding:0;cursor:pointer;min-height:44px!important;box-shadow:none!important}
+.profile-camera{position:absolute;right:-4px;bottom:-4px;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:var(--primary);color:#fff;border:2px solid var(--surface)}
+.profile-card{display:flex;align-items:center;gap:14px;padding:14px;border:1px solid var(--border);background:var(--surface-2);border-radius:20px}
+.profile-card .profile-avatar{width:64px;height:64px;border-radius:20px}
+.profile-card-info{min-width:0;flex:1}
+.profile-card-info strong{display:block;color:var(--text-strong);font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.profile-card-info span{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+.profile-upload{background:var(--primary);color:#fff;border:0;padding:9px 12px;border-radius:12px;font-size:12px;font-weight:700;cursor:pointer;min-height:40px!important}
+@media(max-width:380px){#tab-home .grid.sm\:grid-cols-2,#tab-home .grid.lg\:grid-cols-4{grid-template-columns:1fr!important}nav button{font-size:9px!important}.nav-icon{width:18px!important;height:18px!important}}
+@media(min-width:768px){body{max-width:480px;margin:0 auto;background:var(--bg)!important}header{max-width:480px;margin:0 auto!important}main{max-width:480px!important}nav{max-width:464px;margin:0 auto}}
+
+/* Touch feedback: subtle, tactile, not flashy */
+@keyframes tapBounce{
+  0%{transform:scale(1)}
+  35%{transform:scale(.965)}
+  70%{transform:scale(1.018)}
+  100%{transform:scale(1)}
+}
+.tap-bounce{animation:tapBounce .24s cubic-bezier(.2,.85,.3,1)!important}
+button, [role="button"], a{
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+main button:active{transform:scale(.975)!important}
+#checkoutBtn{
+  min-width:0!important;
+  width:auto!important;
+  height:44px!important;
+  min-height:44px!important;
+  padding:0 15px!important;
+  line-height:1!important;
+  box-shadow:0 8px 20px var(--primary-soft)!important;
+}
+#checkoutBtn:active{transform:scale(.96)!important}
+@media(max-width:420px){
+  #checkoutBtn{padding:0 12px!important;font-size:13px!important}
+}
+</style>
+
 </head>
 <body class="bg-slate-900 text-slate-100 font-sans antialiased min-h-screen flex flex-col justify-between pb-24">
 
@@ -16,15 +241,19 @@
     <header class="bg-emerald-950 border-b border-emerald-900 p-4 shadow-md rounded-b-2xl mx-2 mt-2">
         <div class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3">
             <div class="flex items-center gap-3">
-                <div class="bg-emerald-600 p-2.5 rounded-xl shadow-inner text-white font-bold text-lg">POS</div>
-                <div>
-                    <h1 id="headerOutletName" class="text-lg font-bold text-emerald-100">Outlet Utama</h1>
-                    <p class="text-xs text-emerald-400">Kasir: <span id="headerCashierName" class="font-semibold text-white">Admin</span></p>
+                <button class="profile-avatar-button" onclick="document.getElementById('profileImageInput').click()" aria-label="Ubah foto profil">
+                    <img id="headerProfileImage" class="profile-avatar" alt="Foto profil" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%2310b981'/%3E%3Ccircle cx='50' cy='38' r='18' fill='white'/%3E%3Cpath d='M20 84c4-20 18-28 30-28s26 8 30 28' fill='white'/%3E%3C/svg%3E">
+                    <span class="profile-camera" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h4l2-3h4l2 3h4v12H4z"/><circle cx="12" cy="13" r="3"/></svg></span>
+                </button>
+                <input id="profileImageInput" type="file" accept="image/*" class="hidden" onchange="handleProfileImage(event)">
+                <div class="min-w-0">
+                    <h1 id="headerOutletName" class="text-base font-bold text-emerald-100 truncate">Outlet Utama</h1>
+                    <p class="text-xs text-emerald-400 truncate">Kasir: <span id="headerCashierName" class="font-semibold text-white">Admin</span></p>
                 </div>
             </div>
             <div class="flex items-center gap-4 text-xs bg-emerald-900/60 px-4 py-2 rounded-xl border border-emerald-800">
-                <div>📅 <span id="headerDateDisplay" class="font-medium text-emerald-200"></span></div>
-                <div>🕒 Masuk: <span id="headerTimeIn" class="font-medium text-emerald-200">-</span> | Closing: <span id="headerTimeOut" class="font-medium text-emerald-200">-</span></div>
+                <div><span aria-hidden="true" style="display:inline-flex;vertical-align:middle;margin-right:4px"><svg class="nav-icon" style="width:15px;height:15px;margin:0" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg></span><span id="headerDateDisplay" class="font-medium text-emerald-200"></span></div>
+                <div><span aria-hidden="true" style="display:inline-flex;vertical-align:middle;margin-right:4px"><svg class="nav-icon" style="width:15px;height:15px;margin:0" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>Masuk: <span id="headerTimeIn" class="font-medium text-emerald-200">-</span> | Closing: <span id="headerTimeOut" class="font-medium text-emerald-200">-</span></div>
             </div>
         </div>
     </header>
@@ -154,7 +383,7 @@
                                 <option value="Gofood">Gofood (Online)</option>
                                 <option value="KOL">KOL (Endorse / Non-Revenue)</option>
                             </select>
-                            <button onclick="checkoutOrder()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-2 rounded-xl text-sm font-medium transition shadow-md flex-grow sm:flex-grow-0">Proses Transaksi</button>
+                            <button id="checkoutBtn" onclick="checkoutOrder()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl text-sm font-semibold transition shadow-md flex-none whitespace-nowrap">Proses Transaksi</button>
                         </div>
                     </div>
                 </div>
@@ -206,6 +435,32 @@
             <div class="bg-slate-800/60 border border-slate-700/80 p-5 rounded-2xl shadow-lg">
                 <h2 class="text-lg font-bold text-emerald-300 mb-3">Pengaturan Dasar Sistem</h2>
                 <div class="space-y-4 text-sm">
+                    <div class="profile-card">
+                        <img id="settingsProfileImage" class="profile-avatar" alt="Foto profil">
+                        <div class="profile-card-info">
+                            <strong id="profilePreviewName">Admin</strong>
+                            <span>Foto profil kasir</span>
+                        </div>
+                        <button type="button" class="profile-upload" onclick="document.getElementById('profileImageInput').click()">Ubah Foto</button>
+                    </div>
+                    <div class="theme-control">
+                        <div><label>Tampilan</label><p class="text-xs mt-1 text-slate-400">Pilih mode terang atau gelap</p></div>
+                        <div class="theme-switch">
+                            <button type="button" id="themeLightBtn" onclick="setTheme('light')">☀️ Terang</button>
+                            <button type="button" id="themeDarkBtn" onclick="setTheme('dark')">🌙 Gelap</button>
+                        </div>
+                    </div>
+                    <div class="theme-control">
+                        <div><label>Warna Aksen</label><p class="text-xs mt-1 text-slate-400">Sesuaikan warna aplikasi</p></div>
+                        <div class="swatches">
+                            <button class="swatch" aria-label="Hijau" style="background:#10b981" onclick="setAccent('green')"></button>
+                            <button class="swatch" aria-label="Biru" style="background:#3b82f6" onclick="setAccent('blue')"></button>
+                            <button class="swatch" aria-label="Ungu" style="background:#8b5cf6" onclick="setAccent('purple')"></button>
+                            <button class="swatch" aria-label="Rose" style="background:#f43f5e" onclick="setAccent('rose')"></button>
+                            <button class="swatch" aria-label="Oranye" style="background:#f97316" onclick="setAccent('orange')"></button>
+                            <button class="swatch" aria-label="Cyan" style="background:#06b6d4" onclick="setAccent('cyan')"></button>
+                        </div>
+                    </div>
                     <div>
                         <label class="block text-xs text-slate-400 mb-1">Ganti Nama Outlet</label>
                         <input type="text" id="settingOutletName" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-500">
@@ -229,12 +484,12 @@
     <!-- BOTTOM NAVIGATION BAR -->
     <nav class="bg-slate-950/90 backdrop-blur-md border-t border-slate-800 p-2 fixed bottom-0 left-0 right-0 z-40 rounded-t-2xl shadow-2xl">
         <div class="max-w-4xl mx-auto grid grid-cols-6 gap-1 text-center text-[10px] font-medium text-slate-400">
-            <button onclick="switchTab('home')" id="nav-home" class="py-2 rounded-xl hover:bg-slate-800 transition text-emerald-400 flex flex-col items-center"><span class="text-base">🏠</span> Home</button>
-            <button onclick="switchTab('menu')" id="nav-menu" class="py-2 rounded-xl hover:bg-slate-800 transition flex flex-col items-center"><span class="text-base">📋</span> Menu</button>
-            <button onclick="switchTab('kasir')" id="nav-kasir" class="py-2 rounded-xl hover:bg-slate-800 transition flex flex-col items-center"><span class="text-base">🛍️</span> Kasir</button>
-            <button onclick="switchTab('keuangan')" id="nav-keuangan" class="py-2 rounded-xl hover:bg-slate-800 transition flex flex-col items-center"><span class="text-base">💰</span> Keuangan</button>
-            <button onclick="switchTab('export')" id="nav-export" class="py-2 rounded-xl hover:bg-slate-800 transition flex flex-col items-center"><span class="text-base">📤</span> Laporan</button>
-            <button onclick="switchTab('settings')" id="nav-settings" class="py-2 rounded-xl hover:bg-slate-800 transition flex flex-col items-center"><span class="text-base">⚙️</span> Setting</button>
+            <button onclick="switchTab('home')" id="nav-home" class="py-2 rounded-xl hover:bg-slate-800 transition text-emerald-400 flex flex-col items-center"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 9v11h14V9"/><path d="M9 20v-6h6v6"/></svg> Home</button>
+            <button onclick="switchTab('menu')" id="nav-menu" class="py-2 rounded-xl hover:bg-slate-800 transition flex flex-col items-center"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5h8"/><path d="M9 3h6a1 1 0 0 1 1 1v2H8V4a1 1 0 0 1 1-1Z"/><rect x="5" y="5" width="14" height="16" rx="2"/><path d="M9 10h6M9 14h6M9 18h4"/></svg> Menu</button>
+            <button onclick="switchTab('kasir')" id="nav-kasir" class="py-2 rounded-xl hover:bg-slate-800 transition flex flex-col items-center"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9h14l-1 11H6L5 9Z"/><path d="M9 9V7a3 3 0 0 1 6 0v2"/></svg> Kasir</button>
+            <button onclick="switchTab('keuangan')" id="nav-keuangan" class="py-2 rounded-xl hover:bg-slate-800 transition flex flex-col items-center"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M7 10h.01M17 15h.01M12 10.5c1.7 0 3 1 3 2.5s-1.3 2.5-3 2.5-3-1-3-2.5 1.3-2.5 3-2.5Z"/></svg> Keuangan</button>
+            <button onclick="switchTab('export')" id="nav-export" class="py-2 rounded-xl hover:bg-slate-800 transition flex flex-col items-center"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M5 13v6h14v-6"/></svg> Laporan</button>
+            <button onclick="switchTab('settings')" id="nav-settings" class="py-2 rounded-xl hover:bg-slate-800 transition flex flex-col items-center"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"/><path d="m19 13 2-1-2-1a7.7 7.7 0 0 0-.7-1.7l.7-2-2-1-.9 1.7a8 8 0 0 0-1.8-.7L13 5h-2l-.3 2a8 8 0 0 0-1.8.7L8 6 6 7l.7 2a7.7 7.7 0 0 0-.7 1.7l-2 1 2 1c.1.6.4 1.2.7 1.7L6 16l2 1 .9-1.7c.6.3 1.2.5 1.8.7l.3 2h2l.3-2c.6-.2 1.2-.4 1.8-.7L17 17l2-1-.7-2c.3-.5.6-1.1.7-1.7Z"/></svg> Setting</button>
         </div>
     </nav>
 
@@ -261,6 +516,7 @@
         };
 
         window.onload = function() {
+            loadProfileImage();
             document.getElementById('inputDate').value = appData.date;
             document.getElementById('inputTimeIn').value = appData.timeIn;
             document.getElementById('inputTimeOut').value = appData.timeOut;
@@ -276,6 +532,7 @@
             
             document.getElementById('settingOutletName').value = appData.outletName;
             document.getElementById('settingCashierName').value = appData.cashierName;
+            document.getElementById('profilePreviewName').innerText = appData.cashierName;
         };
 
         function updateHeaderDisplay() {
@@ -311,6 +568,7 @@
 
             document.getElementById('headerOutletName').innerText = appData.outletName;
             document.getElementById('headerCashierName').innerText = appData.cashierName;
+            if(document.getElementById('profilePreviewName')) document.getElementById('profilePreviewName').innerText = appData.cashierName;
             updateHeaderDisplay();
             showNotification("Informasi shift & tanggal berhasil disimpan!");
         }
@@ -322,6 +580,7 @@
             document.getElementById('inputCashierName').value = appData.cashierName;
             document.getElementById('headerOutletName').innerText = appData.outletName;
             document.getElementById('headerCashierName').innerText = appData.cashierName;
+            if(document.getElementById('profilePreviewName')) document.getElementById('profilePreviewName').innerText = appData.cashierName;
             showNotification("Pengaturan dasar berhasil disimpan!");
         }
 
@@ -704,6 +963,66 @@
             navigator.clipboard.writeText(textarea.value);
             showNotification("Laporan rinci berhasil disalin ke clipboard!");
         }
+
+        // ===== PROFILE IMAGE =====
+        const defaultProfileImage = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%2310b981'/%3E%3Ccircle cx='50' cy='38' r='18' fill='white'/%3E%3Cpath d='M20 84c4-20 18-28 30-28s26 8 30 28' fill='white'/%3E%3C/svg%3E";
+        function loadProfileImage(){
+            const saved = localStorage.getItem('marsProfileImage') || defaultProfileImage;
+            document.getElementById('headerProfileImage')?.setAttribute('src', saved);
+            document.getElementById('settingsProfileImage')?.setAttribute('src', saved);
+        }
+        function handleProfileImage(event){
+            const file = event.target.files?.[0];
+            if(!file || !file.type.startsWith('image/')) return;
+            if(file.size > 4 * 1024 * 1024){ showNotification('Foto terlalu besar. Maksimal 4 MB.'); return; }
+            const reader = new FileReader();
+            reader.onload = function(e){
+                const src = e.target.result;
+                localStorage.setItem('marsProfileImage', src);
+                document.getElementById('headerProfileImage')?.setAttribute('src', src);
+                document.getElementById('settingsProfileImage')?.setAttribute('src', src);
+                showNotification('Foto profil berhasil diperbarui!');
+            };
+            reader.readAsDataURL(file);
+            event.target.value = '';
+        }
+
+        // ===== TOUCH / CLICK FEEDBACK =====
+        document.addEventListener('pointerdown', function(e){
+            const btn = e.target.closest('button, [role="button"], a');
+            if(!btn || btn.disabled) return;
+            btn.classList.remove('tap-bounce');
+            // restart animation even on rapid repeated taps
+            void btn.offsetWidth;
+            btn.classList.add('tap-bounce');
+        }, {passive:true});
+
+        document.addEventListener('animationend', function(e){
+            if(e.animationName === 'tapBounce') e.target.classList.remove('tap-bounce');
+        });
+
+        // ===== MODERN THEME SYSTEM =====
+        function applyTheme(){
+            const theme = localStorage.getItem('marsTheme') || 'dark';
+            const accent = localStorage.getItem('marsAccent') || 'green';
+            document.documentElement.dataset.theme = theme;
+            document.documentElement.dataset.accent = accent;
+            document.getElementById('themeLightBtn')?.classList.toggle('active', theme === 'light');
+            document.getElementById('themeDarkBtn')?.classList.toggle('active', theme === 'dark');
+            document.querySelectorAll('.swatch').forEach(el => el.classList.remove('active'));
+            const active = document.querySelector(`.swatch[onclick="setAccent('${accent}')"]`);
+            active?.classList.add('active');
+        }
+        function setTheme(theme){
+            localStorage.setItem('marsTheme', theme);
+            applyTheme();
+        }
+        function setAccent(accent){
+            localStorage.setItem('marsAccent', accent);
+            applyTheme();
+        }
+        applyTheme();
+
     </script>
 </body>
 </html>
